@@ -1,6 +1,6 @@
 services:
   app:
-    build: ./app
+    image: ./app
     environment:
       - DB_HOST=mysql
       - DB_USER=root

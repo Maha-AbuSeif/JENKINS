@@ -31,6 +31,17 @@ pipeline {
                     docker push $DOCKERHUB_UN/image:${GIT_COMMIT}
                  '''
             }
-        
+       }
+            
     }
+    Post {
+        success {
+            slackSend message: "Pipeline is successful"
+        }
+        failure {
+            slackSend message: "Pipeline has failed"
+        }
+    }       
+
 }
+    

@@ -1,6 +1,6 @@
 services:
   app:
-    image: $DOCKERHUB_UN/image:${GIT_COMMIT}
+    image: new_image
     environment:
       - DB_HOST=mysql
       - DB_USER=root

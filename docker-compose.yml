@@ -1,6 +1,6 @@
 services:
   app:
-    image: new_image
+    image: ${new_image}
     environment:
       - DB_HOST=mysql
       - DB_USER=root

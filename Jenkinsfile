@@ -23,6 +23,14 @@ pipeline {
               '''
             }
         }
+        stage('Delivery') {
+            steps {
+               withCredentials([usernamePassword(credentialsId: 'Docker_Creds', usernameVariable: 'DOCKERHUB_UN', passwordVariable:  'DOCKERHUB_PASS')])  
+                 sh '''
+                    docker login -u $DOCKERHUB_UN -p $DOCKERHUB_PASS
+                    docker push $DOCKERHUB_UN/image:${GIT_COMMIT}
+                 '''
+            }
         
     }
 }

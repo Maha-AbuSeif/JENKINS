@@ -19,7 +19,7 @@ pipeline {
               export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
               render=$(cat docker-compose.yml)
               echo "$render" | envsubst > docker-compose.yml
-              docker compose up 
+              docker-compose up 
               '''
             }
         }

@@ -6,23 +6,14 @@ pipeline {
     }
     
     stages {
-        stage('Build') {
+        stage('Build & Test') {
             steps {
               sh '''
               docker image build -t $DOCKERHUB_UN/image:${GIT_COMMIT} ./app
               '''
             }
         }
-         stage('Test') {
-            steps {
-              sh '''
-              export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
-              render=$(cat ./k8s/app-deployment.yaml)
-              echo "$render" | envsubst > ./k8s/app-deployment.yaml
-              kubectl apply -f ./k8s/
-              '''
-            }
-        }
+        
         stage('Delivery') {
             steps {
                withCredentials([usernamePassword(credentialsId: 'Docker_Creds', usernameVariable: 'DOCKERHUB_UN', passwordVariable:  'DOCKERHUB_PASS')])  
@@ -32,8 +23,20 @@ pipeline {
                  '''
             }
        }
-            
+        
+         stage('Deploy') {
+            steps {
+              sh '''
+              export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
+              render=$(cat ./k8s/app-deployment.yaml)
+              echo "$render" | envsubst > ./k8s/app-deployment.yaml
+              kubectl apply -f ./k8s/
+              '''
+            }
+        }
+        
     }
+    
     post {
         success {
             slackSend message: "Pipeline is successful"

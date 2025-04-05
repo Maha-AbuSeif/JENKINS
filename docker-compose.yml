@@ -6,9 +6,6 @@ services:
       - DB_USER=root
       - DB_PASS=password
       - DB_DATABASE=todo_db
-    depends_on:
-      mysql:
-        condition: service_healthy
     networks:
       - app-network
     ports:

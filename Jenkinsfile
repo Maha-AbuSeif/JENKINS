@@ -17,9 +17,9 @@ pipeline {
             steps {
               sh '''
               export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
-              render=$(cat ./k8s/app-deployment.yaml)
-              echo "$render" | envsubst > ./k8s/app-deployment.yaml
-              kubectl apply -f ./k8s/app-deployment.yaml
+              render=$(cat dep-deployment.yml)
+              echo "$render" | envsubst > dep-deployment.yml
+              kubectl apply -f dep-deployment.yml
               '''
             }
         }

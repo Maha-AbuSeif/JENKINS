@@ -5,7 +5,7 @@ metadata:
   name: mysql
 spec:
   type: ExternalName
-  externalName: database-2.cluster-ckli8ayms0x4.us-east-1.rds.amazonaws.com
+  externalName: ${db-endpoint}
   ports:
     - port: 3306
 

@@ -52,6 +52,7 @@ pipeline {
               echo "$render" | envsubst > ./k8s/app-deployment.yaml
               aws eks update-kubeconfig --name python-app-cluster --region us-west-2
               kubectl apply -f ./k8s/secrests.yaml
+              kubectl apply -f ./k8s/mysql-service.yaml
               kubectl apply -f ./k8s/
               '''
                 }

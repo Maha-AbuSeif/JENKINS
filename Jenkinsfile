@@ -9,7 +9,6 @@ pipeline {
         stage('Build & Test') {
             steps {
               sh '''
-              sudo usermod -aG docker jenkins
               docker image build -t $DOCKERHUB_UN/image:${GIT_COMMIT} ./app
               '''
             }

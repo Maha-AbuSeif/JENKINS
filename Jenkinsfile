@@ -25,7 +25,7 @@ pipeline {
             }
        }
         
-        stages {
+        
         stage('update db endpoint') {
             steps {
                 withCredentials([string(credentialsId: 'db-endpoint', variable: 'db-endpoint')]) {
@@ -58,15 +58,7 @@ pipeline {
         
     }
     
-    post {
-        success {
-            // slackSend message: "Pipeline is successful"
-        }
-        failure {
-           // slackSend message: "Pipeline has failed"
-        }
-    }       
 
 }
     
-}
+

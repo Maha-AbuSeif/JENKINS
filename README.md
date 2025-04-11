@@ -52,7 +52,7 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 
 ---
 
-> ✅ **Tip:** Make sure your credentials (`Docker_Creds`, `db_endpoint`, `aws-cred`) are set up in Jenkins before running this pipeline.
+> ✅ **Tip:** Make sure your credentials (`Docker_Creds`, `db_endpoint`, `aws-cred`) are set up in Jenkins before running this pipeline. Also install these 2 jenkins plugins: AWS Credentials and Pipeline: AWS Steps 
 
 ```
 

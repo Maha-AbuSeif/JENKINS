@@ -9,6 +9,7 @@ pipeline {
         stage('Build & Test') {
             steps {
               sh '''
+              sudo usermod -aG docker jenkins
               docker image build -t $DOCKERHUB_UN/image:${GIT_COMMIT} ./app
               '''
             }
@@ -18,7 +19,6 @@ pipeline {
             steps {
                withCredentials([usernamePassword(credentialsId: 'Docker_Creds', usernameVariable: 'DOCKERHUB_UN', passwordVariable:  'DOCKERHUB_PASS')]){  
                    sh '''
-                    sudo usermod -aG docker jenkins
                     docker login -u $DOCKERHUB_UN -p $DOCKERHUB_PASS
                     docker push $DOCKERHUB_UN/image:${GIT_COMMIT}
                    '''

@@ -25,7 +25,20 @@ pipeline {
             }
        }
         
-         stage('Deploy') {
+        stages {
+        stage('update db endpoint') {
+            steps {
+                withCredentials([string(credentialsId: 'db-endpoint', variable: 'db-endpoint')]) {
+             sh '''
+              export db-endpoint=$db-endpoint
+              render=$(cat ./k8s/mysql-service.yaml)
+              echo "$render" | envsubst > ./k8s/mysql-service.yaml
+             
+              '''
+                }
+            }
+        }
+        stage('Deploy') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
@@ -47,10 +60,10 @@ pipeline {
     
     post {
         success {
-            slackSend message: "Pipeline is successful"
+            // slackSend message: "Pipeline is successful"
         }
         failure {
-            slackSend message: "Pipeline has failed"
+           // slackSend message: "Pipeline has failed"
         }
     }       
 

@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'db-endpoint', variable: 'db-endpoint')]) {
              sh '''
-              export db-endpoint=$db-endpoint
+              export db-endpoint="$db-endpoint"
               render=$(cat ./k8s/mysql-service.yaml)
               echo "$render" | envsubst > ./k8s/mysql-service.yaml
              

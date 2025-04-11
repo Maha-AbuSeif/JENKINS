@@ -28,7 +28,7 @@ pipeline {
         
         stage('update db endpoint') {
             steps {
-                withCredentials([string(credentialsId: 'db-endpoint', variable: 'db-endpoint')]) {
+                withCredentials([string(credentialsId: 'db_endpoint', variable: 'db_endpoint')]) {
              sh '''
               export db_endpoint="$db_endpoint"
               render=$(cat ./k8s/mysql-service.yaml)

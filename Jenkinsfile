@@ -53,7 +53,8 @@ pipeline {
               aws eks update-kubeconfig --name python-app-cluster --region us-west-2
               kubectl apply -f ./k8s/secrests.yaml
               kubectl apply -f ./k8s/mysql-service.yaml
-              kubectl apply -f ./k8s/
+              kubectl apply -f ./k8s/app-deployment.yaml
+              kubectl apply -f ./k8s/app-loadbalancer-service.yaml
               '''
                 }
             }

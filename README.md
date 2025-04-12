@@ -1,5 +1,6 @@
 # DEPI-Project
-![deployment (2)](https://github.com/user-attachments/assets/cc83c13f-4e9e-442c-9745-47dfaf98857d)
+![deployment (2)](https://github.com/user-attachments/assets/d1acbbbd-5e63-4e27-acc6-4fed51936f7e)
+
 
 # 🚀 Jenkins CI/CD Pipeline Documentation
 

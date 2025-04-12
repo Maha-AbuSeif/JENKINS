@@ -49,10 +49,10 @@ pipeline {
         ]) {
             sh '''
                 # Export the credentials
-                export DB_HOST="$DB_HOST"
-                export DB_USER="$DB_USER"
-                export DB_PASS="$DB_PASS"
-                export DB_DATABASE="$DB_DATABASE"
+                export DB_HOST=$DB_HOST
+                export DB_USER=$DB_USER
+                export DB_PASS=$DB_PASS
+                export DB_DATABASE=$DB_DATABASE
 
                 # Read and substitute variables in deployment file
                 render=$(cat ./k8s/app-deployment.yaml)

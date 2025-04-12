@@ -35,7 +35,6 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 - 🔄 Replaces image reference in deployment manifest.
 - 🌐 Connects to the EKS cluster (`python-app-cluster`) via AWS CLI.
 - 🚢 Applies the Kubernetes manifests:
-  - `secrests.yaml`
   - `mysql-service.yaml`
   - `app-deployment.yaml`
   - `app-loadbalancer-service.yaml`
@@ -47,10 +46,11 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 | Stage               | Description                                  | Tools Involved                           |
 |---------------------|----------------------------------------------|-------------------------------------------|
 | 🧱 Build & Test      | Build Docker image from codebase             | Docker                                     |
-| 🚚 Delivery          | Push Docker image to Docker Hub              | Docker, Jenkins credentials                |
-| 🛢️ Update DB Endpoint| Inject database endpoint into YAML template | `envsubst`, Jenkins credentials            |
-| ☁️ Deploy to EKS     | Deploy app and services to AWS EKS           | AWS CLI, `kubectl`, `envsubst`, Kubernetes |
-| 🔑 DB Credentials    | Use database credentials in Kubernetes deployment | Jenkins credentials: `DB_HOST` 🏠, `DB_USER` 👤, `DB_PASS` 🔑, `DB_DATABASE` 🗄️ |
+| 🚚 Delivery          | Push Docker image to Docker Hub              | Docker, Jenkins credentials: `Docker_Creds`🐳                |
+| 🛢️ Update DB Endpoint| Inject database endpoint into YAML template | `envsubst`, Jenkins credentials: `db_endpoint`🌐           |
+| 🔑 Update DB Credentials    | Inject database credentials in Kubernetes deployment | Jenkins credentials: `DB_HOST` 🏠, `DB_USER` 👤, `DB_PASS` 🔑, `DB_DATABASE` 🗄️ |
+| ☁️ Deploy to EKS     | Deploy app and services to AWS EKS           | AWS CLI, `kubectl`, `envsubst`, Kubernetes, Jenkins credentials: `aws-cred` ☁️|
+
 
 ---
 

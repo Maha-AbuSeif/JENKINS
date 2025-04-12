@@ -32,8 +32,8 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 ## ☁️ Stage 4: Deploy to AWS EKS
 
 - 🔑 Uses AWS credentials stored in Jenkins (`aws-cred`).
-- 🔄 Replaces database info and credetianls references in deployment manifest.
-- 🔄 Replaces image reference in deployment manifest.
+- 🔄 Replaces database info and credetianls references in deployment manifest from Jenkins credentials.
+- 🔄 Replaces image reference in deployment manifest from Jenkins credentials.
 - 🌐 Connects to the EKS cluster (`python-app-cluster`) via AWS CLI.
 - 🚢 Applies the Kubernetes manifests:
   - `mysql-service.yaml`

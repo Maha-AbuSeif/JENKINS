@@ -39,13 +39,20 @@ pipeline {
             }
         }
         
-        stage('update db data in init container') {
-    steps {
-        withCredentials([
+        
+        stage('Deploy') {
+            steps {
+                withCredentials([
             string(credentialsId: 'DB_HOST', variable: 'DB_HOST'),
             string(credentialsId: 'DB_USER', variable: 'DB_USER'),
             string(credentialsId: 'DB_PASS', variable: 'DB_PASS'),
-            string(credentialsId: 'DB_DATABASE', variable: 'DB_DATABASE')
+            string(credentialsId: 'DB_DATABASE', variable: 'DB_DATABASE'),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred',
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+            ]
         ]) {
             sh '''
                 # Export the credentials
@@ -57,31 +64,19 @@ pipeline {
                 # Read and substitute variables in deployment file
                 render=$(cat ./k8s/app-deployment.yaml)
                 echo "$render" | envsubst > ./app-deployment.yaml
+                
+                export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
+                render=$(cat ./k8s/app-deployment.yaml)
+                echo "$render" | envsubst > ./k8s/app-deployment.yaml
+                aws eks update-kubeconfig --name python-app-cluster --region us-west-2
+                kubectl apply -f ./k8s/mysql-service.yaml
+                kubectl apply -f ./k8s/app-deployment.yaml
+                kubectl apply -f ./k8s/app-loadbalancer-service.yaml
             '''
         }
     }
 }
-        
-        stage('Deploy') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred',  // Replace with your saved credentials ID
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                ]]) {
-              sh '''
-              export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
-              render=$(cat ./k8s/app-deployment.yaml)
-              echo "$render" | envsubst > ./k8s/app-deployment.yaml
-              aws eks update-kubeconfig --name python-app-cluster --region us-west-2
-              kubectl apply -f ./k8s/mysql-service.yaml
-              kubectl apply -f ./k8s/app-deployment.yaml
-              kubectl apply -f ./k8s/app-loadbalancer-service.yaml
-              '''
-                }
-            }
-        }
+   
         
     }
     

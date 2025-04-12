@@ -45,15 +45,16 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 ## 📊 Summary Table
 
 | Stage               | Description                                  | Tools Involved                           |
-|--------------------|----------------------------------------------|-------------------------------------------|
+|---------------------|----------------------------------------------|-------------------------------------------|
 | 🧱 Build & Test      | Build Docker image from codebase             | Docker                                     |
 | 🚚 Delivery          | Push Docker image to Docker Hub              | Docker, Jenkins credentials                |
 | 🛢️ Update DB Endpoint| Inject database endpoint into YAML template | `envsubst`, Jenkins credentials            |
 | ☁️ Deploy to EKS     | Deploy app and services to AWS EKS           | AWS CLI, `kubectl`, `envsubst`, Kubernetes |
+| 🔑 DB Credentials    | Use database credentials in Kubernetes deployment | Jenkins credentials: `DB_HOST` 🏠, `DB_USER` 👤, `DB_PASS` 🔑, `DB_DATABASE` 🗄️ |
 
 ---
 
-> ✅ **Tip:** Make sure your credentials (`Docker_Creds`, `db_endpoint`, `aws-cred`) are set up in Jenkins before running this pipeline. Also install these 2 jenkins plugins: AWS Credentials and Pipeline: AWS Steps 
+> ✅ **Tip:** Make sure your credentials (`Docker_Creds`, `db_endpoint`, `aws-cred`,`DB_HOST`,`DB_USER`,`DB_PASS`,`DB_DATABASE`) are set up in Jenkins before running this pipeline. Also install these 2 jenkins plugins: AWS Credentials and Pipeline: AWS Steps 
 
-```
+
 

@@ -32,11 +32,11 @@ spec:
         command: ["sh", "-c"]
         args:
           - |
-            until mysql --protocol=TCP --port=3306 --host="${DB_HOST}" --user="${DB_USER}" --password="${DB_PASS}" "${DB_DATABASE}" -e "SELECT 1"; do
+            until mysql --protocol=TCP --port=3306 --host=${DB_HOST} --user=${DB_USER} --password=${DB_PASS} ${DB_DATABASE} -e "SELECT 1"; do
              echo "Waiting for MySQL..."
              sleep 2
             done
-            mysql --protocol=TCP --port=3306 --host="${DB_HOST}" --user="${DB_USER}" --password="${DB_PASS}" "${DB_DATABASE}" -e "CREATE TABLE IF NOT EXISTS tasks ( id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, description TEXT, is_complete BOOLEAN DEFAULT false );"
+            mysql --protocol=TCP --port=3306 --host=${DB_HOST} --user=${DB_USER} --password=${DB_PASS} ${DB_DATABASE} -e "CREATE TABLE IF NOT EXISTS tasks ( id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, description TEXT, is_complete BOOLEAN DEFAULT false );"
       containers:
       - name: app-container
         image: ${new_image}

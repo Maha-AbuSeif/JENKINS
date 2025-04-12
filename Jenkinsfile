@@ -39,6 +39,29 @@ pipeline {
             }
         }
         
+        stage('update db data in init container') {
+    steps {
+        withCredentials([
+            string(credentialsId: 'DB_HOST', variable: 'DB_HOST'),
+            string(credentialsId: 'DB_USER', variable: 'DB_USER'),
+            string(credentialsId: 'DB_PASS', variable: 'DB_PASS'),
+            string(credentialsId: 'DB_DATABASE', variable: 'DB_DATABASE')
+        ]) {
+            sh '''
+                # Export the credentials
+                export DB_HOST="$DB_HOST"
+                export DB_USER="$DB_USER"
+                export DB_PASS="$DB_PASS"
+                export DB_DATABASE="$DB_DATABASE"
+
+                # Read and substitute variables in deployment file
+                render=$(cat ./k8s/app-deployment.yaml)
+                echo "$render" | envsubst > ./app-deployment.yaml
+            '''
+        }
+    }
+}
+        
         stage('Deploy') {
             steps {
                 withCredentials([[

@@ -29,13 +29,10 @@ spec:
       initContainers:
       - name: init-mysql
         image: mysql:8.0
-        envFrom:
-        - secretRef:
-            name: db-credentials
         command: ["sh", "-c"]
         args:
           - |
-            mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_DATABASE -e "CREATE TABLE IF NOT EXISTS tasks ( id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, description TEXT, is_complete BOOLEAN DEFAULT false );"
+           mysql --protocol=TCP --port=3306 --host=${DB_HOST} --user=${DB_USER} --password=${DB_PASS} ${DB_DATABASE} -e "CREATE TABLE IF NOT EXISTS tasks ( id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, description TEXT, is_complete BOOLEAN DEFAULT false );"
       containers:
       - name: app-container
         image: ${new_image}
@@ -46,8 +43,5 @@ spec:
           limits:
             cpu: 400m
             memory: 512Mi
-        envFrom:
-        - secretRef:
-            name: db-credentials
         ports:
         - containerPort: 5000

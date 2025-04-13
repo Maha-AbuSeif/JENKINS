@@ -51,27 +51,17 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 
 ---
 
-## 📊 Stage: Deploy Metrics Server & HPA
+## 📊 Stage 5: Deploy Metrics Server & HPA
 
-🔐 **Authentication**
-- Uses AWS credentials stored in Jenkins for secure cluster access
-- Credential ID: 'aws-cred'
-
-📈 **Key Actions**
-1. Deploys Metrics Server
-   - Applies configuration from `metrics-server.yaml`
-   - Enables collection of resource metrics in cluster
-
-2. Configures Horizontal Pod Autoscaler (HPA)
-   - Target CPU utilization: 75%
-   - Minimum pods: 2
-   - Maximum pods: 5
-   - Automatically scales based on CPU usage
-
-🔄 **Purpose**
-- Enables automatic scaling capabilities
-- Monitors resource utilization
-- Maintains optimal performance under varying loads
+- 🔑 Uses AWS credentials stored in Jenkins (`aws-cred`)
+- 🛠️ Applies configuration from `metrics-server.yaml`
+- ⚖️ Configures Horizontal Pod Autoscaler (HPA)
+   - 🎯 Target CPU utilization: 75%
+   - 🔽 Minimum pods: 2
+   - 🔼 Maximum pods: 5
+   - 🔄 Automatically scales based on CPU usage
+- 📈 Enables resource monitoring and auto-scaling
+- 🚀 Optimizes performance under varying workloads
 
 ---
 

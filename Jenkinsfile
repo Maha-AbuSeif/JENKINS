@@ -83,7 +83,7 @@ pipeline {
         stage('Deploy  Metrics Server') {
             steps {
               sh '''
-              kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+              kubectl apply -f ./k8s/metrics-server.yaml
               kubectl autoscale deployment app-deployment --cpu-percent=75 --min=2 --max=5
               '''
             }

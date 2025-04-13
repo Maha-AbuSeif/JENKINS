@@ -1,13 +1,14 @@
 # Automated CI/CD Pipeline: Docker Image Build and Deployment on EKS with Amazon Aurora MySQL and Load Balancer , HPA Integration
 
-![image](https://github.com/user-attachments/assets/add8a955-dcb3-4d07-aea8-1b4e50f0bae1)
-![image](https://github.com/user-attachments/assets/804afca9-27ae-412b-bb7a-f696669af863)
+![image](https://github.com/user-attachments/assets/b5a95a90-66f7-4cac-a36f-79d7ad2a1096)
+![image](https://github.com/user-attachments/assets/e2d6261e-1e31-492a-bd22-450c2cb5645a)
 ![image](https://github.com/user-attachments/assets/384a318d-6d41-408f-b7a4-2c1f9c65582c)
-![image](https://github.com/user-attachments/assets/ddc76072-8fdb-4402-8d08-bbb8a726f718)
+![image](https://github.com/user-attachments/assets/54e80bb6-18a4-45ad-a0c6-5b3ab5e89ef6)
 ![image](https://github.com/user-attachments/assets/981a68a4-6e87-4866-88da-019bbe2ffaa6)
-![image](https://github.com/user-attachments/assets/3bfb1e10-f85e-4cdc-85e3-df72018fb223)
-![image](https://github.com/user-attachments/assets/c7de7419-e552-437a-93d2-0bd29475c8c0)
-![image](https://github.com/user-attachments/assets/57b83c14-da88-4aab-9b78-fa00a2a6d54c)
+![image](https://github.com/user-attachments/assets/2c2afc6f-1ef3-4f5f-9f28-13097755b7d8)
+![image](https://github.com/user-attachments/assets/a6d71634-c116-48e7-a747-7bf274b32776)
+![image](https://github.com/user-attachments/assets/3267baa5-510b-489d-b3e3-0c6a50f2bc6d)
+
 ![deployment (2)](https://github.com/user-attachments/assets/3666d4c9-4caa-445e-8b66-f3aad4b5a16b)
 
 

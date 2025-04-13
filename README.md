@@ -1,4 +1,4 @@
-# Automated CI/CD Pipeline: Jenkins-Driven Docker Image Build and Deployment on EKS with Amazon Aurora MySQL and Load Balancer , HPA Integration
+# Automated CI/CD Pipeline: Docker Image Build and Deployment on EKS with Amazon Aurora MySQL and Load Balancer , HPA Integration
 
 ![image](https://github.com/user-attachments/assets/add8a955-dcb3-4d07-aea8-1b4e50f0bae1)
 ![image](https://github.com/user-attachments/assets/804afca9-27ae-412b-bb7a-f696669af863)

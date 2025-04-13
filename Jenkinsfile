@@ -82,6 +82,13 @@ pipeline {
 
         stage('Deploy  Metrics Server') {
             steps {
+                withCredentials(
+                    [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred',
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+            ]){
               sh '''
               kubectl apply -f ./k8s/metrics-server.yaml
               kubectl autoscale deployment app-deployment --cpu-percent=75 --min=2 --max=5

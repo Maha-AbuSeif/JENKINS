@@ -84,7 +84,7 @@ pipeline {
                 ]) {
                     sh '''
                     kubectl apply -f ./k8s/metrics-server.yaml
-                    kubectl autoscale deployment app-deployment --cpu-percent=75 --min=2 --max=5
+                    kubectl apply -f ./k8s/app-hpa.yaml
                     '''
                 }
             }

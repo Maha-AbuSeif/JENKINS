@@ -67,16 +67,29 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 
 ---
 
+# 📊 Stage 6: Deploy Prometheus and Grafana
+
+🔑 **Uses AWS Credentials**: Utilizes AWS credentials stored in Jenkins (`aws-cred`).
+📥 **Add Helm Repository**: Adds the Prometheus community Helm charts repository.
+🚀 **Install Prometheus**: Deploys Prometheus using the `kube-prometheus-stack` chart.
+- 🗂️ **Namespace**: Deploys in the `monitoring` namespace.
+- 📦 **Storage Class**: Sets `gp2` for persistent volumes.
+📄 **Apply Grafana Configuration**: Uses `kubectl` to apply Grafana load balancer configuration from `grafana-lb.yaml`.
+📊 **Enables Monitoring**: Sets up Prometheus and Grafana for monitoring Kubernetes clusters.
+
+---
+
 ## 📊 Summary Table
 
-| Stage               | Description                                  | Tools Involved                           |
-|---------------------|----------------------------------------------|-------------------------------------------|
-| 🧱 Build & Test      | Build Docker image from codebase             | Docker                                     |
-| 🚚 Delivery          | Push Docker image to Docker Hub              | Docker, Jenkins credentials: `Docker_Creds`🐳                |
-| 🛢️ Update DB Endpoint| Inject database endpoint into YAML template | `envsubst`, Jenkins credentials: `db_endpoint`🌐           |
-| 🔑 Update DB Credentials    | Inject database credentials in Kubernetes deployment | `envsubst`, Jenkins credentials: `DB_HOST` 🏠, `DB_USER` 👤, `DB_PASS` 🔑, `DB_DATABASE` 🗄️ |
-| ☁️ Deploy to EKS     | Deploy app and services to AWS EKS           | AWS CLI, `kubectl`, `envsubst`, Kubernetes, Jenkins credentials: `aws-cred` ☁️|
-| ⚖️ Deploy Metrics Server | Configure HPA and deploy Metrics Server    | `kubectl`, Metrics Server, HPA, Jenkins credentials: `aws-cred` 📊|
+| Stage                      | Description                                           | Tools Involved                                                                 |
+|----------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------|
+| 🧱 Build & Test            | Build Docker image from codebase                      | Docker                                                                         |
+| 🚚 Delivery                | Push Docker image to Docker Hub                       | Docker, Jenkins credentials: Docker_Creds🐳                                     |
+| 🛢️ Update DB Endpoint      | Inject database endpoint into YAML template           | envsubst, Jenkins credentials: db_endpoint🌐                                    |
+| 🔑 Update DB Credentials   | Inject database credentials in Kubernetes deployment  | envsubst, Jenkins credentials: DB_HOST 🏠, DB_USER 👤, DB_PASS 🔑, DB_DATABASE 🗄️ |
+| ☁️ Deploy to EKS           | Deploy app and services to AWS EKS                    | AWS CLI, kubectl, envsubst, Kubernetes, Jenkins credentials: aws-cred ☁️       |
+| ⚖️ Deploy Metrics Server   | Configure HPA and deploy Metrics Server               | kubectl, Metrics Server, HPA, Jenkins credentials: aws-cred 📊                 |
+| 📊 Deploy Prometheus and Grafana | Set up monitoring with Prometheus and Grafana        | Helm, kubectl, Jenkins credentials: aws-cred 🔑                                 |
 
 
 ---

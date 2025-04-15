@@ -106,7 +106,7 @@ pipeline {
                       --namespace monitoring \
                       --create-namespace \
                       --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
-                    kubectl apply -f  grafana-lb.yaml 
+                    kubectl apply -f  ./k8s/grafana-lb.yaml 
                     '''
                 }
             }

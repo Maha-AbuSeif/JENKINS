@@ -1,4 +1,4 @@
-# Automated CI/CD Pipeline: Docker Image Build and Deployment on EKS with Amazon Aurora MySQL and Load Balancer , HPA Integration
+# Automated CI/CD Pipeline: Docker Image Build and Deployment on EKS with Amazon Aurora MySQL and Load Balancer , HPA Integration. Monitoring using Prometheus and Grafana.
 
 ![image](https://github.com/user-attachments/assets/b5a95a90-66f7-4cac-a36f-79d7ad2a1096)
 ![image](https://github.com/user-attachments/assets/e2d6261e-1e31-492a-bd22-450c2cb5645a)

@@ -43,16 +43,13 @@ This pipeline automates the build, test, delivery, and deployment process for a 
 
 ---
 
-## ☁️ Stage 4: Deploy to AWS EKS
+## Stage 4: Deploy to AWS EKS with Helm
 
-- 🔑 Uses AWS credentials stored in Jenkins (`aws-cred`).
-- 🔄 Replaces database info and credetianls references in deployment manifest from Jenkins credentials.
-- 🔄 Replaces image reference in deployment manifest from Jenkins credentials.
-- 🌐 Connects to the EKS cluster (`python-app-cluster`) via AWS CLI.
-- 🚢 Applies the Kubernetes manifests:
-  - `mysql-service.yaml`
-  - `app-deployment.yaml`
-  - `app-loadbalancer-service.yaml`
+- 🔑 Uses AWS credentials stored in Jenkins (aws-cred)
+- 🔑 Uses Docker Hub credentials for image pulling (docker-hub-cred)
+- 🌐 Connects to the EKS cluster (python-app-cluster) via AWS CLI
+- 📦 Deploys the application using Helm chart instead of individual YAML files
+- 🔄 Handles environment variables and credentials through Helm values
 
 ---
 

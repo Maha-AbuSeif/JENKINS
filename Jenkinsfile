@@ -43,6 +43,7 @@ pipeline {
                     ]
                 ]) {
                     sh '''
+                    aws eks update-kubeconfig --name python-app-cluster --region us-west-2
                     helm upgrade --install myapp ./k8s \
                       --set db_endpoint=${db_endpoint}
                       --set image=${DOCKERHUB_USR}/image:${GIT_COMMIT} \

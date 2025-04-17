@@ -52,21 +52,13 @@ pipeline {
                     ]
                 ]) {
                     sh '''
-                    export DB_HOST=$DB_HOST
-                    export DB_USER=$DB_USER
-                    export DB_PASS=$DB_PASS
-                    export DB_DATABASE=$DB_DATABASE
-
-                    render=$(cat ./k8s/app-deployment.yaml)
-                    echo "$render" | envsubst > ./app-deployment.yaml
+                    helm upgrade --install myapp ./k8s \
+                      --set image=${DOCKERHUB_USR}/image:${GIT_COMMIT} \
+                      --set db_host=${DB_HOST} \
+                      --set db_user=${DB_USER} \
+                      --set db_pass=${DB_PASS} \
+                      --set db_database=${DB_DATABASE}
                     
-                    export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
-                    render=$(cat ./k8s/app-deployment.yaml)
-                    echo "$render" | envsubst > ./k8s/app-deployment.yaml
-                    aws eks update-kubeconfig --name python-app-cluster --region us-west-2
-                    kubectl apply -f ./k8s/mysql-service.yaml
-                    kubectl apply -f ./k8s/app-deployment.yaml
-                    kubectl apply -f ./k8s/app-loadbalancer-service.yaml
                     '''
                 }
             }

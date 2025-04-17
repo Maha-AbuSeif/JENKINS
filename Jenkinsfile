@@ -25,25 +25,16 @@ pipeline {
             }
         }
         
-        stage('update db endpoint') {
-            steps {
-                withCredentials([string(credentialsId: 'db_endpoint', variable: 'db_endpoint')]) {
-                    sh '''
-                    export db_endpoint="$db_endpoint"
-                    render=$(cat ./k8s/mysql-service.yaml)
-                    echo "$render" | envsubst > ./k8s/mysql-service.yaml
-                    '''
-                }
-            }
-        }
         
-        stage('Deploy') {
+    
+        stage('Deploy app with helm') {
             steps {
                 withCredentials([
                     string(credentialsId: 'DB_HOST', variable: 'DB_HOST'),
                     string(credentialsId: 'DB_USER', variable: 'DB_USER'),
                     string(credentialsId: 'DB_PASS', variable: 'DB_PASS'),
                     string(credentialsId: 'DB_DATABASE', variable: 'DB_DATABASE'),
+                    string(credentialsId: 'db_endpoint', variable: 'db_endpoint'),
                     [
                         $class: 'AmazonWebServicesCredentialsBinding',
                         credentialsId: 'aws-cred',
@@ -51,23 +42,16 @@ pipeline {
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]
                 ]) {
-                    sh '''
-                    export DB_HOST=$DB_HOST
-                    export DB_USER=$DB_USER
-                    export DB_PASS=$DB_PASS
-                    export DB_DATABASE=$DB_DATABASE
-
-                    render=$(cat ./k8s/app-deployment.yaml)
-                    echo "$render" | envsubst > ./app-deployment.yaml
-                    
-                    export new_image="$DOCKERHUB_UN/image:${GIT_COMMIT}"
-                    render=$(cat ./k8s/app-deployment.yaml)
-                    echo "$render" | envsubst > ./k8s/app-deployment.yaml
-                    aws eks update-kubeconfig --name python-app-cluster --region us-west-2
-                    kubectl apply -f ./k8s/mysql-service.yaml
-                    kubectl apply -f ./k8s/app-deployment.yaml
-                    kubectl apply -f ./k8s/app-loadbalancer-service.yaml
-                    '''
+                    sh """
+                        aws eks update-kubeconfig --name python-app-cluster --region us-west-2
+                        helm upgrade --install myapp ./k8s \\
+                          --set db_endpoint=${db_endpoint} \\
+                          --set image=${DOCKERHUB_UN}/image:${GIT_COMMIT} \\
+                          --set db_host=${DB_HOST} \\
+                          --set db_user=${DB_USER} \\
+                          --set db_pass=${DB_PASS} \\
+                          --set db_database=${DB_DATABASE}
+                        """
                 }
             }
         }
@@ -102,7 +86,7 @@ pipeline {
                 ]) {
                     sh '''
                     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-                    helm install prometheus prometheus-community/kube-prometheus-stack \
+                    helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
                       --namespace monitoring \
                       --create-namespace \
                       --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"

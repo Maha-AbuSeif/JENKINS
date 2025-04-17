@@ -5,7 +5,7 @@ metadata:
   name: mysql
 spec:
   type: ExternalName
-  externalName: ${db_endpoint}
+  externalName: {{ .Values.db_endpoint }}
   ports:
     - port: 3306
 

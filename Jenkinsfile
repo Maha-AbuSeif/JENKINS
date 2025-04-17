@@ -25,25 +25,16 @@ pipeline {
             }
         }
         
-        stage('update db endpoint') {
-            steps {
-                withCredentials([string(credentialsId: 'db_endpoint', variable: 'db_endpoint')]) {
-                    sh '''
-                    export db_endpoint="$db_endpoint"
-                    render=$(cat ./k8s/mysql-service.yaml)
-                    echo "$render" | envsubst > ./k8s/mysql-service.yaml
-                    '''
-                }
-            }
-        }
         
-        stage('Deploy') {
+    
+        stage('Deploy app with helm') {
             steps {
                 withCredentials([
                     string(credentialsId: 'DB_HOST', variable: 'DB_HOST'),
                     string(credentialsId: 'DB_USER', variable: 'DB_USER'),
                     string(credentialsId: 'DB_PASS', variable: 'DB_PASS'),
                     string(credentialsId: 'DB_DATABASE', variable: 'DB_DATABASE'),
+                    string(credentialsId: 'db_endpoint', variable: 'db_endpoint'),
                     [
                         $class: 'AmazonWebServicesCredentialsBinding',
                         credentialsId: 'aws-cred',
@@ -53,6 +44,7 @@ pipeline {
                 ]) {
                     sh '''
                     helm upgrade --install myapp ./k8s \
+                      --set db_endpoint=${db_endpoint}
                       --set image=${DOCKERHUB_USR}/image:${GIT_COMMIT} \
                       --set db_host=${DB_HOST} \
                       --set db_user=${DB_USER} \

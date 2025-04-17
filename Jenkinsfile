@@ -42,17 +42,16 @@ pipeline {
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]
                 ]) {
-                    sh '''
-                    aws eks update-kubeconfig --name python-app-cluster --region us-west-2
-                    helm upgrade --install myapp ./k8s \
-                      --set db_endpoint=${db_endpoint} \
-                      --set image=${DOCKERHUB_USR}/image:${GIT_COMMIT} \
-                      --set db_host=${DB_HOST} \
-                      --set db_user=${DB_USER} \
-                      --set db_pass=${DB_PASS} \
-                      --set db_database=${DB_DATABASE}
-                    
-                    '''
+                    sh """
+                        aws eks update-kubeconfig --name python-app-cluster --region us-west-2
+                        helm upgrade --install myapp ./k8s \\
+                          --set db_endpoint=${db_endpoint} \\
+                          --set image=${DOCKERHUB_USR}/image:${GIT_COMMIT} \\
+                          --set db_host=${DB_HOST} \\
+                          --set db_user=${DB_USER} \\
+                          --set db_pass=${DB_PASS} \\
+                          --set db_database=${DB_DATABASE}
+                        """
                 }
             }
         }
